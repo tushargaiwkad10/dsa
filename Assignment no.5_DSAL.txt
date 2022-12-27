@@ -1,0 +1,469 @@
+
+
+
+
+#include<iostream>
+using namespace std;
+class BST
+{
+struct node
+{
+int data;
+node *left, *right;
+node()
+{
+left=right=NULL;
+}
+}*root;
+public:
+   BST()
+   {      root=NULL;      }
+   node *return_root()
+   {     return root;     }
+void insert(int);
+void display(node*);
+int search(int);
+void leveldisp(node*);
+void mirroring(node*);
+void del(int);
+};
+
+
+void BST :: insert(int d)
+{
+node *temp=root, *Nnode=new node;
+Nnode->data=d;
+if(root==NULL)
+{
+root=Nnode;
+cout<<"=>Root node created !";
+}
+
+else
+{
+while(1)
+{
+    if(d<temp->data)
+    {    if(temp->left==NULL)
+            {  temp->left=Nnode;
+            cout<<"=>Node Inserted Successfully !\n";
+            break;
+          }
+     else
+        temp=temp->left;
+
+   }
+else if(d>temp->data)
+{    if(temp->right==NULL)
+       {  temp->right=Nnode;
+       cout<<"=>Node Inserted Successfully !\n";
+           break;
+       }
+   else
+    temp=temp->right;
+
+}
+else
+  {
+    cout<<"Entry is Repeated...RE-ENTER !\n";
+    break;
+   }
+}
+}
+}
+
+
+void BST :: display(node *temp)
+{
+if(temp!=NULL)
+   {
+   display(temp->left);
+   cout<<temp->data<<" ";
+    display(temp->right);
+  }
+}
+
+
+int BST :: search(int key)
+{
+node *temp=root;
+int flag=0;
+while(temp!=NULL)
+{
+if(key<temp->data)
+       temp=temp->left;
+else if(key>temp->data)
+     temp=temp->right;
+else
+{
+    flag=1;
+    break;
+    }
+}
+return flag;
+}
+
+
+void BST :: leveldisp(node *temp)
+{
+node* Q[20];
+
+int front=0,rear=1,level=0,leaf=0;
+if(temp==NULL)
+       cout<<"Tree is Empty";
+else
+{
+Q[0]=temp, Q[1]=NULL;
+cout<<"\n  Level "<<level++<<"=>";
+
+while(front<rear)
+{
+     temp=Q[front++];
+if(temp==NULL)
+{
+cout<<"\n  Level "<<level++<<"=>";
+Q[++rear]=NULL;
+}
+else
+{
+cout<<temp->data<<" ";
+if(temp->left!=NULL)
+     Q[++rear]=temp->left;
+if(temp->right!=NULL)
+     Q[++rear]=temp->right;
+if(temp->left==NULL&&temp->right==NULL)
+    leaf++;
+}
+}
+}
+cout<<"\n Depth of Tree : "<<level-1;
+cout<<"\n Leaf Nodes :"<<leaf;
+}
+
+
+void BST :: mirroring(node *temp)
+{
+node* Q[20];
+int front=0,rear=1;
+
+if(temp==NULL)
+     cout<<"Tree is Empty";
+else
+{
+    Q[0]=temp,Q[1]=NULL;
+ while(front<rear)
+  {
+     temp=Q[front++];
+    if(temp==NULL)
+     {  cout<<endl;
+        Q[++rear]=NULL;
+     }
+else
+{
+   cout<<temp->data<<" ";
+if(temp->right!=NULL)
+     Q[++rear]=temp->right;
+if(temp->left!=NULL)
+     Q[++rear]=temp->left;
+}
+}
+}
+}
+
+
+void BST :: del(int num)
+{
+node *s[20], *ptemp=root,*temp=root,*rtemp,*prtemp;
+char flag;
+
+while(temp->data!=num&& temp!=NULL)
+{
+if(num>temp->data)
+{
+ptemp=temp;
+flag='r';
+temp=temp->right;
+}
+else
+{
+ptemp=temp;
+flag='l';
+temp=temp->left;
+}
+}
+if(temp!=NULL)
+{
+if(temp->left==NULL && temp->right==NULL)
+{
+if(root==temp)
+     root==NULL;
+if(flag=='r')
+     ptemp->right=NULL;
+else
+      ptemp->left=NULL;
+}
+else if(temp->left!=NULL && temp->right!=NULL)
+{
+prtemp=temp->right;
+rtemp=temp->right;
+while(rtemp->left!=NULL)
+{
+prtemp=rtemp;
+rtemp=rtemp->left;
+}
+prtemp->left=rtemp->right;
+if(temp==root)
+     root=rtemp;
+else if(flag=='l')
+    ptemp->left=rtemp;
+else if(flag=='r')
+    ptemp->right=rtemp;
+
+rtemp->left=temp->left;
+if(rtemp!=prtemp)
+     rtemp->right=temp->right;
+}
+else if(temp->right!=NULL && temp->left==NULL)
+{
+if(root==temp)
+    root=root->right;
+if(flag=='l')
+    ptemp->left=temp->right;
+else
+    ptemp->right=temp->right;
+}
+else if(temp->left!=NULL && temp->right==NULL)
+{
+if(root==temp)
+      root=root->left;
+if(flag=='l')
+     ptemp->left=temp->left;
+else
+     ptemp->right=temp->left;
+}
+}
+else
+cout<<"\nNode not present to be deleted";
+delete temp;
+}
+
+
+int main()
+{
+  BST tree;
+  int i,val,key,op;
+  char ans,ANS;
+  do
+{
+cout<<"\nEnter the Node value: ";
+cin>>val;
+tree.insert(val);
+cout<<"\nDo you to add more Nodes (Y/N): ";
+cin>>ans;
+}while(ans=='Y'||ans=='y');
+do
+{
+cout<<"\nSELECT THE OPERATION TO PERFORM";
+cout<<"\n1. Insert a new Node";
+cout<<"\n2. Display Tree";
+cout<<"\n3. Search the Node";
+cout<<"\n4. Display level wise Nodes";
+cout<<"\n5. Mirror all the Nodes";
+cout<<"\n6. Delete a Node";
+cout<<"\nEnter your choice : ";
+cin>>op;
+switch(op)
+{
+case 1:
+cout<<"\n********** Inserting  new Node **********\n";
+cout<<"\nEnter Value of new Node: ";
+cin>>val;
+tree.insert(val);
+break;
+
+case 2:
+cout<<"\n********** Tree Displayed **********\n";
+tree.display(tree.return_root());
+break;
+
+case 3 :
+cout<<"\n********** Searching a node **********\n";
+cout<<"\nEnter the node value to search : ";
+cin>>key;
+i=tree.search(key);
+if(i==1)
+cout<<"\nThe node with value "<<key<<" is present";
+else
+cout<<"\nSearched node is absent !";
+break;
+
+case 4:
+cout<<"\n********* Levelwise Displayed *********\n";
+tree.leveldisp(tree.return_root());
+break;
+
+case 5:
+cout<<"\n********** Mirrored Nodes **********\n";
+tree.mirroring(tree.return_root());
+break;
+
+
+case 6:
+cout<<"\n********** Deleting a Node **********\n";
+cout<<"\nEnter the no. you want to delete : ";
+cin>>val;
+tree.del(val);
+cout<<"\nTree after deletion of node is : \n";
+tree.display(tree.return_root());
+break;
+
+default:cout<<"\nInvalid Input !";
+
+}
+cout<<"\nDo you want to Continue(Y/N) : ";
+cin>>ANS;
+}while(ANS=='y'||ANS=='Y');
+}
+
+
+
+
+
+
+/* OUTPUT
+
+Enter the Node value: 5
+=>Root node created !
+Do you to add more Nodes (Y/N): y
+
+Enter the Node value: 3
+=>Node Inserted Successfully !
+
+Do you to add more Nodes (Y/N): y
+
+Enter the Node value: 2
+=>Node Inserted Successfully !
+
+Do you to add more Nodes (Y/N): y
+
+Enter the Node value: 6
+=>Node Inserted Successfully !
+
+Do you to add more Nodes (Y/N): y
+
+Enter the Node value: 4
+=>Node Inserted Successfully !
+
+Do you to add more Nodes (Y/N): y
+
+Enter the Node value: 1
+=>Node Inserted Successfully !
+
+Do you to add more Nodes (Y/N): y
+
+Enter the Node value: 5
+Entry is Repeated...RE-ENTER !
+
+Do you to add more Nodes (Y/N): n
+
+SELECT THE OPERATION TO PERFORM
+1. Insert a new Node
+2. Display Tree
+3. Search the Node
+4. Display level wise Nodes
+5. Mirror all the Nodes
+6. Delete a Node
+Enter your choice : 1
+
+********** Inserting  new Node **********
+
+Enter Value of new Node: 7
+=>Node Inserted Successfully !
+
+Do you want to Continue(Y/N) : y
+
+SELECT THE OPERATION TO PERFORM
+1. Insert a new Node
+2. Display Tree
+3. Search the Node
+4. Display level wise Nodes
+5. Mirror all the Nodes
+6. Delete a Node
+Enter your choice : 2
+
+********** Tree Displayed **********
+1 2 3 4 5 6 7
+Do you want to Continue(Y/N) : y
+
+SELECT THE OPERATION TO PERFORM
+1. Insert a new Node
+2. Display Tree
+3. Search the Node
+4. Display level wise Nodes
+5. Mirror all the Nodes
+6. Delete a Node
+Enter your choice : 3
+
+********** Searching a node **********
+
+Enter the node value to search : 3
+
+The node with value 3 is present
+Do you want to Continue(Y/N) : y
+
+SELECT THE OPERATION TO PERFORM
+1. Insert a new Node
+2. Display Tree
+3. Search the Node
+4. Display level wise Nodes
+5. Mirror all the Nodes
+6. Delete a Node
+Enter your choice : 4
+
+********* Levelwise Displayed *********
+
+  Level 0=>5
+  Level 1=>3 6
+  Level 2=>2 4 7
+  Level 3=>1
+ Depth of Tree : 3
+ Leaf Nodes :3
+Do you want to Continue(Y/N) : y
+
+SELECT THE OPERATION TO PERFORM
+1. Insert a new Node
+2. Display Tree
+3. Search the Node
+4. Display level wise Nodes
+5. Mirror all the Nodes
+6. Delete a Node
+Enter your choice : 5
+
+********** Mirrored Nodes **********
+5
+6 3
+7 4 2
+1
+Do you want to Continue(Y/N) : y
+
+SELECT THE OPERATION TO PERFORM
+1. Insert a new Node
+2. Display Tree
+3. Search the Node
+4. Display level wise Nodes
+5. Mirror all the Nodes
+6. Delete a Node
+Enter your choice : 6
+
+********** Deleting a Node **********
+
+Enter the no. you want to delete : 5
+
+Tree after deletion of node is :
+1 2 3 4 6 7
+Do you want to Continue(Y/N) : n
+
+Process returned 0 (0x0)   execution time : 99.423 s
+Press any key to continue.
+
+*/
