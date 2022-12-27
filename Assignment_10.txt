@@ -107,39 +107,15 @@ f2.close();
 remove(fname);
 rename("Temp.Txt",fname);
 }
-void seq::search(int key)
-{
- ifstream fp;
- student s;
- int flag=0;
- fp.open(fname); //open a file
-  fp.read((char*)&s,sizeof(s)); //read
 
-while(!fp.eof())
-{
-        if(key==s.return_Roll()) //compare
-        {
-             flag=1;//rollno found
-             break;
-        }
-   fp.read((char*)&s,sizeof(s));//read from file
-
-}//end of while
-
-if(flag==0)
- cout<<"Record does not present \n";
-else
-  s.putdata();
-fp.close();
-}
 
 int main()
-      {
+ {
  int ch,R;
  seq ob;
  do
  {
- cout<<"\n1: create Database\n2: Display \n3: Add a record\n4: Delete a record\n5: Search a record";
+ cout<<"\n1: create Database\n2: Display \n3: Add a record\n4: Delete a record";
  cout<<"\nEnter your choice: ";
      cin>>ch;
    switch(ch)
@@ -160,11 +136,7 @@ int main()
                  ob.Remove(R);
                  ob.display();
                  break;
-         case 5:
-                   cout<<"\nEnter Roll No to search";
-                   cin>>R;
-              ob.search(R);
-              break;
+      
     }
-}while(ch<6);
+}while(ch<5);
 }
