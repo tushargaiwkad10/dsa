@@ -1,0 +1,28 @@
+def ternary_search(a,x,low,high):
+    if x not in a:
+        print("no not found:")
+    while(low<=high):
+        mid1=int(low+(high-low)/3)
+        mid2=int(low+2*(high-low)/3)
+        
+        if(x==a[mid1]):
+            return mid1
+            
+        elif(x==a[mid2]):
+            return mid2
+            
+        elif(x<a[mid1]):
+            return ternary_search(a,x,low,mid1-1)
+            
+        elif(x<a[mid2]):
+            return ternary_search(a,x,mid1+1,mid2-1)
+            
+        else:
+            return ternary_search(a,x,mid2+1,high)
+        
+a=[1,2,3,4,5,6,7,8]
+x=int(input("enter the number to search:"))
+
+ternary_search(a,x,0,7)
+print("x is at index number:",
+ternary_search(a,x,0,7))

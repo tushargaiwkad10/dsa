@@ -1,0 +1,61 @@
+def longestword():
+    str=input("Enter a string: ")
+    long = ""
+    i = 0
+    while(i < len(str)):
+        str1 = ""
+        if(i != len(str)):
+            while(str[i] == " "):
+                i=i+1
+        while(str[i] != " "):    
+            str1 = str1 + str[i]
+            i=i+1
+            if(i == len(str)):
+                break
+        if(len(str1)>len(long)):        
+            long = str1
+    print("Longest word is:",long) 
+
+def character():
+    str1 = input("Enter the string: ")
+    char = input("Enter the character: ")
+    print(str1)
+    counter = 0
+    for i in range(len(str1)):
+        if char == str1[i]:
+            counter = counter + 1
+    print("The occrurance of ",char," is: ",counter)
+
+
+def palindrome():
+    str2 = input("Enter string: ")
+    lenstr2 = len(str2)
+    j = lenstr2 - 1
+    flag = 0
+    for i in range(int(lenstr2 / 2 + 1)):
+        if (str2[i] == str2[j]):
+            j -= 1
+            flag = 1
+        else:
+            flag = 0
+            break
+            
+
+    if (flag == 1):
+        print("Entered string is Palindrome")
+    else:
+        print("Entered string is not Palindrome")
+
+
+def substring():
+    str1 = input("Enter the string: ")
+    sub1 = input("Enter the substring: ")
+    m = len(sub1)
+    n = len(str1)
+    if(n>=m):
+        for i in range((n-m+1)):
+            I=1
+character()
+longestword()
+palindrome()
+substring()

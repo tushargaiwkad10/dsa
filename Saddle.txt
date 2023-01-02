@@ -1,0 +1,41 @@
+def saddle(s):
+    row=0
+    for i in range(r):
+        min_val=m[i][0]
+        col=0
+        for j in range(1,c):
+            if(min_val>s[i][j]):
+                min_val=s[i][j]
+                col=j
+                row=i
+        k=0
+        for k in range(r):
+            if(min_val<s[k][col]):
+                break
+            k+=1
+        if(k==3):
+            print("The saddle point is ",min_val," and it is at:-\n")
+            return min_val
+    return False
+
+c=int(input("Enter the number of columns:-\t"))
+r=int(input("Enter the number of rows:-\t"))
+m=[]
+
+print("Enter the elements of matrix:-\n")
+for i in range(r):
+    a=[]
+    for j in range(c):
+        e=input()
+        a.append(e)
+    m.append(a)
+
+g=saddle(m)
+for i in range(r):
+    for j in range(c):
+        if(g==m[i][j]):
+            print(i,"th row")
+            print(j,"th column")
+if(g==False):
+    print("No saddle point is present...")
+

@@ -1,0 +1,134 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+class stack{
+	
+	public:
+		const static int size =100;
+		int top=-1;
+		char a[size];
+		char n;
+		string rp="";
+		void push(char x){
+			if(top==size-1){
+				cout<<"\nStack is already full...";
+			}
+			else{
+				a[++top]=x;
+			}
+		}
+		char pop(){
+			if(top==-1){
+				cout<<"\nStack is already empty...";
+				return -1;
+			}
+			else{
+				return a[top--];
+			}
+		}
+		void display(){
+			for(int i=0;i<=top;i++){
+				cout<<a[i];
+			}
+		}
+		void reverse();
+		void pallindrome(string &o);
+	
+};
+void stack :: reverse(){
+			string r="";
+			for(int i=top;i>-1;i--){
+				r.push_back(pop());
+			}
+			cout<<"\n"<<r;
+			rp="";
+			for(int i=0;i<r.size();i++){
+				if('A'<=r[i]and 'Z'>=r[i]){
+					
+					 rp.push_back(r[i]);
+				}else{
+					if('a'<=r[i]and 'z'>=r[i]){
+						r[i]=(char)r[i]-'a'+'A';
+				
+						rp.push_back(r[i]);
+				}
+			}		
+		}
+	
+	}
+	
+void stack::pallindrome(string &o){
+	string sp="";
+	for(int i=0;i<o.size();i++){
+		if('A'<=o[i]and 'Z'>=o[i]){
+			 push(o[i]);
+			 sp.push_back(o[i]);
+		}else{
+			if('a'<=o[i]and 'z'>=o[i]){
+				o[i]=(char)o[i]-'a'+'A';
+				push(o[i]);
+				sp.push_back(o[i]);
+			}
+		}		
+	}
+	int flag=1;
+	for(int i=0 ; i<sp.size();i++){
+		if(sp[i]!=rp[i]){
+			flag=0;
+		}
+	}
+
+	if(flag==1){
+		cout<<"\nThe given string is palindrome";
+	}
+	if(flag==0){
+		cout<<"\nThe given string is not palindrome...";
+	}	
+}
+int main(){
+	stack st;
+	string s;
+	int c;
+	do{
+		cout<<"\n**********MENU**********";
+		cout<<"\n1.Add String\n2.Display String\n3.Reverse string\n4.Check Palindrome or not\n5.Exit\nEnterr your choice:-\t";
+		cin>>c;
+		cin.ignore();
+		
+		switch(c){
+			case 1:{
+				for(int i=0;i<s.size();i++){
+					st.pop();
+					}
+				cout<<"\nEnter the string:-\t";
+				getline(cin,s);
+				for(int i=0;i<s.size();i++){
+					st.push(s[i]);
+					}
+				break;
+			}
+			case 2:{
+				st.display();
+				break;
+			}
+			case 3:{
+				st.reverse();
+				break;
+			}
+			case 4:{
+				st.pallindrome(s);
+				break;
+			}
+			case 5:{
+				exit(0);
+				break;
+			}
+			default:{
+				cout<<"\nInvalid input...";
+				break;
+			}
+		}
+	}
+	while(1);
+}

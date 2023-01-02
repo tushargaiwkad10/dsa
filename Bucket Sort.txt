@@ -1,0 +1,33 @@
+#Bucket Sort
+def Bubblesort (data):
+    N= len(data)
+    for p in range(1, N):
+        for c in range(0, N-1): 
+            if data[c] > data[c+1]:
+                data[c], data[c+1] = data[c+1], data[c]
+    return data
+    
+MinValue = 0; MaxValue = 99.99
+
+data = [float (x) for x in input ("Enter percentage marks of each student separted by space: ").split()] 
+NB = int(input('Enter number of buckets: '))
+
+bucket = []
+print (bucket)
+
+bucket =[ [] for i in range (NB)]
+print (bucket)
+
+for number in data:
+    bucketNumber = (int(number)-MinValue)//NB
+    bucket [bucketNumber].append(number)
+
+print (bucket)
+
+SortedData = []
+for i in range (NB) :
+    bucket [i]= Bubblesort (bucket[i])
+    SortedData = SortedData + bucket[i]
+
+print ('The Sorted data using bucket sort is:',SortedData)
+
